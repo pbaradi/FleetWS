@@ -1,5 +1,6 @@
 package com.sjsu.fleetws.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -52,7 +53,7 @@ public class DriverDAOImpl implements DriverDAO{
 	public List<DriverVO> getAllDrivers() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = null;
-		List<DriverVO> drivers = null;
+		List<DriverVO> drivers = new ArrayList<DriverVO>();
 		try{
 			tx = session.beginTransaction();
 			Query q = session.createQuery("from DriverVO");

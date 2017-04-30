@@ -18,6 +18,7 @@ import com.sjsu.fleetws.dao.DriverDAO;
 import com.sjsu.fleetws.dao.impl.DriverDAOImpl;
 import com.sjsu.fleetws.model.DriverVO;
 import com.sjsu.fleetws.model.RestDriverVO;
+import com.sjsu.fleetws.util.CommonUtils;
 
 @Path("/drivers")
 public class DriverEndPoint {
@@ -26,19 +27,18 @@ public class DriverEndPoint {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getGeofences() {
+	public Response getDrivers() {
 		driverDAO = new DriverDAOImpl();
 		List<DriverVO> drivers = (List<DriverVO>)driverDAO.getAllDrivers();
-
 		List<RestDriverVO> result = new ArrayList<RestDriverVO>(); 
-		// Printing the values
 		for (DriverVO driver : drivers) {
-			RestDriverVO eachGf = new RestDriverVO(driver.getDriverId(),driver.getName(),driver.getEmail(),driver.getPassword(), driver.getMobile(),driver.getVehicle());
-			result.add(eachGf);
+			RestDriverVO restVO = CommonUtils.driverVoToRestVo(driver);
+			if(restVO.getVehicle()!=null){
+				restVO.getVehicle().setDriver(null);
+			}
+			result.add(restVO);
 		}
-		GenericEntity<List<RestDriverVO>> entity = new GenericEntity<List<RestDriverVO>>(
-				result) {
-		};
+		GenericEntity<List<RestDriverVO>> entity = new GenericEntity<List<RestDriverVO>>(result) {};
 		return Response.status(Status.OK).entity(entity).build();
 	}
 
@@ -47,7 +47,7 @@ public class DriverEndPoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addDriver(RestDriverVO driver){
 		driverDAO = new DriverDAOImpl();
-		DriverVO driverVO = new DriverVO(driver.getDriverId(),driver.getName(),driver.getEmail(),driver.getPassword(),driver.getMobile(),driver.getVehicle());
+		DriverVO driverVO = CommonUtils.driverRestVoToVo(driver);
 		driverVO = driverDAO.addDriver(driverVO);
 		driver.setDriverId(driverVO.getDriverId());
 		GenericEntity<RestDriverVO> entity = new GenericEntity<RestDriverVO>(driver) {};
@@ -57,10 +57,10 @@ public class DriverEndPoint {
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateUserBug(RestDriverVO driver){
-		DriverDAO geofenceImpl = new DriverDAOImpl();
-		DriverVO driverVO = new DriverVO(driver.getDriverId(),driver.getName(),driver.getEmail(),driver.getPassword(),driver.getMobile(),driver.getVehicle());
-		driverVO = geofenceImpl.updateDriver(driverVO);
+	public Response updateDriver(RestDriverVO driver){
+		driverDAO = new DriverDAOImpl();
+		DriverVO driverVO = CommonUtils.driverRestVoToVo(driver);
+		driverVO = driverDAO.updateDriver(driverVO);
 		GenericEntity<RestDriverVO> entity = new GenericEntity<RestDriverVO>(driver) {};
 		return Response.status(Status.OK).entity(entity).build();
 	}

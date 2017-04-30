@@ -2,6 +2,7 @@ package com.sjsu.fleetws.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -78,7 +79,7 @@ public class DriverVO implements Serializable{
 		this.mobile = mobile;
 	}
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	public VehicleVO getVehicle() {
 		return vehicle;
 	}

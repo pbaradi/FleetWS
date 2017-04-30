@@ -20,7 +20,7 @@ import com.sjsu.fleetws.model.GeofenceVO;
 import com.sjsu.fleetws.model.RestGeofenceVO;
 
 
-@Path("/geofence")
+@Path("/geofences")
 public class GeofenceEndPoint {
 	
 	@Produces(MediaType.APPLICATION_JSON)

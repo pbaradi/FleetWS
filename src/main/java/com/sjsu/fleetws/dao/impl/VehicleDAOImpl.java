@@ -70,7 +70,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	
 	public static void main(String args[]){
 		VehicleDAO dao = new VehicleDAOImpl();
-		VehicleVO v = new VehicleVO(0, "7NTE189", "Honda", "Honda 2015", "Sedan", null);
+		VehicleVO v = new VehicleVO(0, "7NTE189", "Honda", "Honda 2015", "Sedan","00:20:39:89", null);
 		v = dao.addVehicle(v);
 		System.out.println(v.getVehicleId());
 	}

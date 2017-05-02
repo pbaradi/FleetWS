@@ -1,12 +1,16 @@
 package com.sjsu.fleetws.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,19 +24,22 @@ public class VehicleVO implements Serializable{
 	private String manufacturer;
 	private String model;
 	private String vehicleType;
+	private String deviceId;
 	private DriverVO driver;
+	private Set<SessionTripVO> sessionTripVOs;
 	
 	public VehicleVO() {
 		super();
 	}
 	
-	public VehicleVO(int vehicleId, String licenceNumber, String manufacturer, String model, String vehicleType, DriverVO driver) {
+	public VehicleVO(int vehicleId, String licenceNumber, String manufacturer, String model, String vehicleType, String deviceId, DriverVO driver) {
 		super();
 		this.vehicleId = vehicleId;
 		this.licenceNumber = licenceNumber;
 		this.manufacturer = manufacturer;
 		this.model = model;
 		this.vehicleType = vehicleType;
+		this.deviceId = deviceId;
 		this.driver = driver;
 	}
 	
@@ -85,6 +92,24 @@ public class VehicleVO implements Serializable{
 
 	public void setDriver(DriverVO driver) {
 		this.driver = driver;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "vehicle", cascade=CascadeType.ALL)
+	public Set<SessionTripVO> getSessionTripVOs() {
+		return sessionTripVOs;
+	}
+
+	public void setSessionTripVOs(Set<SessionTripVO> sessionTripVOs) {
+		this.sessionTripVOs = sessionTripVOs;
+	}
+
+	@Column(name="device_id")
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 
 }

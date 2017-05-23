@@ -85,7 +85,7 @@ public class VehicleVO implements Serializable{
 		this.vehicleType = vehicleType;
 	}
 
-	@OneToOne(mappedBy = "vehicle")
+	@OneToOne(mappedBy = "vehicle", cascade=CascadeType.ALL, fetch= FetchType.LAZY)
 	public DriverVO getDriver() {
 		return driver;
 	}
@@ -94,7 +94,7 @@ public class VehicleVO implements Serializable{
 		this.driver = driver;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "vehicle", cascade=CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade=CascadeType.ALL)
 	public Set<SessionTripVO> getSessionTripVOs() {
 		return sessionTripVOs;
 	}

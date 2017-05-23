@@ -15,16 +15,20 @@ public class GeofenceVO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int fenceId;
-    private double gLat;
-    private double gLng;
-    private double radius;
+    private double north;
+    private double south;
+    private double east;
+    private double west;
+    private int vehiclesCount;
     
-	public GeofenceVO(int fenceId, double gLat, double gLng, double radius) {
+	public GeofenceVO(int fenceId, double north, double south, double east, double west, int vehiclesCount) {
 		super();
 		this.fenceId = fenceId;
-		this.gLat = gLat;
-		this.gLng = gLng;
-		this.radius = radius;
+		this.north = north;
+		this.south = south;
+		this.east = east;
+		this.west = west;
+		this.vehiclesCount = vehiclesCount;
 	}
 	
 	public GeofenceVO(){
@@ -41,32 +45,50 @@ public class GeofenceVO implements Serializable{
 	public void setFenceId(int fenceId) {
 		this.fenceId = fenceId;
 	}
-	
-	@Column(name = "g_lat")
-	public double getgLat() {
-		return gLat;
+
+	@Column(name = "north")
+	public double getNorth() {
+		return north;
 	}
 
-	public void setgLat(double gLat) {
-		this.gLat = gLat;
+	public void setNorth(double north) {
+		this.north = north;
 	}
 	
-	@Column(name = "g_lng")
-	public double getgLng() {
-		return gLng;
+	@Column(name = "south")
+	public double getSouth() {
+		return south;
 	}
 
-	public void setgLng(double gLng) {
-		this.gLng = gLng;
+	public void setSouth(double south) {
+		this.south = south;
 	}
 	
-	@Column(name = "radius")
-	public double getRadius() {
-		return radius;
+	@Column(name = "east")
+	public double getEast() {
+		return east;
 	}
 
-	public void setRadius(double radius) {
-		this.radius = radius;
+	public void setEast(double east) {
+		this.east = east;
+	}
+
+	@Column(name = "west")
+	public double getWest() {
+		return west;
+	}
+
+	public void setWest(double west) {
+		this.west = west;
+	}
+	
+	@Column(name = "vehicles_count")
+	public int getVehiclesCount() {
+		return vehiclesCount;
+	}
+
+	public void setVehiclesCount(int vehiclesCount) {
+		this.vehiclesCount = vehiclesCount;
 	}
 	
 }

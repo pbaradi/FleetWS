@@ -8,9 +8,10 @@ import javax.ws.rs.core.Link;
 public class RestGeofenceVO {
 	
 	private int fenceId;
-    private double gLat;
-    private double gLng;
-    private double radius;
+    private double north;
+    private double south;
+    private double east;
+    private double west;
 	private List<Link> links = new ArrayList<Link>();
 	
 	public RestGeofenceVO() {
@@ -18,12 +19,13 @@ public class RestGeofenceVO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public RestGeofenceVO(int fenceId, double gLat, double gLng, double radius) {
+	public RestGeofenceVO(int fenceId, double north, double south, double east, double west) {
 		super();
 		this.fenceId = fenceId;
-		this.gLat = gLat;
-		this.gLng = gLng;
-		this.radius = radius;
+		this.north = north;
+		this.south = south;
+		this.east = east;
+		this.west = west;
 	}
 	
 	public int getFenceId() {
@@ -32,23 +34,29 @@ public class RestGeofenceVO {
 	public void setFenceId(int fenceId) {
 		this.fenceId = fenceId;
 	}
-	public double getgLat() {
-		return gLat;
+	public double getNorth() {
+		return north;
 	}
-	public void setgLat(double gLat) {
-		this.gLat = gLat;
+	public void setNorth(double north) {
+		this.north = north;
 	}
-	public double getgLng() {
-		return gLng;
+	public double getSouth() {
+		return south;
 	}
-	public void setgLng(double gLng) {
-		this.gLng = gLng;
+	public void setSouth(double south) {
+		this.south = south;
 	}
-	public double getRadius() {
-		return radius;
+	public double getEast() {
+		return east;
 	}
-	public void setRadius(double radius) {
-		this.radius = radius;
+	public void setEast(double east) {
+		this.east = east;
+	}
+	public double getWest() {
+		return west;
+	}
+	public void setWest(double west) {
+		this.west = west;
 	}
 	public List<Link> getLinks() {
 		return links;

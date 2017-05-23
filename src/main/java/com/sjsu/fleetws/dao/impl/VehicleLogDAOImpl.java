@@ -12,15 +12,17 @@ import com.sjsu.fleetws.model.VehicleLogVO;
 import com.sjsu.fleetws.util.Constants;
 
 public class VehicleLogDAOImpl implements VehicleLogDAO {
-	
+
 	private Cluster cluster;
 	private Session session;
 
 	private void getInstance(){
 		cluster = Cluster.builder().addContactPoint(Constants.CASSANDRA_ADDRESS).build();
-		session = cluster.connect(Constants.CASSANDRA_KEYSPACE);
+		if(session==null){
+			session = cluster.connect(Constants.CASSANDRA_KEYSPACE);
+		}
 	}
-	
+
 	@Override
 	public List<VehicleLogVO> getVehicleLog(){
 		List<VehicleLogVO> vehicleLogs = new ArrayList<>();
@@ -33,7 +35,7 @@ public class VehicleLogDAOImpl implements VehicleLogDAO {
 		close();
 		return vehicleLogs;
 	}
-	
+
 	private void close(){
 		session.close();
 		cluster.close();

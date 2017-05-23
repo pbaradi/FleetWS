@@ -22,17 +22,18 @@ import com.sjsu.fleetws.model.RestGeofenceVO;
 
 @Path("/geofences")
 public class GeofenceEndPoint {
+	GeofenceDAO geofenceImpl;
 	
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public Response getGeofences() {
-		GeofenceDAO geofenceImpl = new GeofenceDAOImpl();
+		geofenceImpl = new GeofenceDAOImpl();
 		List<GeofenceVO> gf = (List<GeofenceVO>)geofenceImpl.getAllGeofences();
 		
 		List<RestGeofenceVO> result = new ArrayList<RestGeofenceVO>(); 
 		// Printing the values
 		for (GeofenceVO geofence : gf) {
-			RestGeofenceVO eachGf = new RestGeofenceVO(geofence.getFenceId(),geofence.getgLat(),geofence.getgLng(),geofence.getRadius());
+			RestGeofenceVO eachGf = new RestGeofenceVO(geofence.getFenceId(),geofence.getNorth(),geofence.getSouth(),geofence.getEast(), geofence.getWest());
 			result.add(eachGf);
 		}
 		GenericEntity<List<RestGeofenceVO>> entity = new GenericEntity<List<RestGeofenceVO>>(
@@ -45,8 +46,8 @@ public class GeofenceEndPoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response saveGF(GeofenceVO geofence){
-		GeofenceDAO geofenceImpl = new GeofenceDAOImpl();
-		GeofenceVO gf = new GeofenceVO(geofence.getFenceId(),geofence.getgLat(),geofence.getgLng(),geofence.getRadius());
+		geofenceImpl = new GeofenceDAOImpl();
+		GeofenceVO gf = new GeofenceVO(geofence.getFenceId(),geofence.getNorth(),geofence.getSouth(),geofence.getEast(), geofence.getWest(), 1);
 		gf = geofenceImpl.saveGeofence(gf);
 		GenericEntity<GeofenceVO> entity = new GenericEntity<GeofenceVO>(gf) {};
 		return Response.status(Status.OK).entity(entity).build();
@@ -56,8 +57,8 @@ public class GeofenceEndPoint {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUserBug(GeofenceVO geofence){
-		GeofenceDAO geofenceImpl = new GeofenceDAOImpl();
-		GeofenceVO gf = new GeofenceVO(geofence.getFenceId(),geofence.getgLat(),geofence.getgLng(),geofence.getRadius());
+		geofenceImpl = new GeofenceDAOImpl();
+		GeofenceVO gf = new GeofenceVO(geofence.getFenceId(),geofence.getNorth(),geofence.getSouth(),geofence.getEast(), geofence.getWest(), geofence.getVehiclesCount());
 		gf = geofenceImpl.updateGeofence(gf);	
 		GenericEntity<GeofenceVO> entity = new GenericEntity<GeofenceVO>(gf) {};
 		return Response.status(Status.OK).entity(entity).build();

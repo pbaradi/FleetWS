@@ -101,7 +101,7 @@ public class SessionTripVO implements Serializable{
 		this.endLong = endLong;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="vehicle_id", nullable=false)
 	public VehicleVO getVehicle() {
 		return vehicle;

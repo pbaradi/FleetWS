@@ -34,6 +34,26 @@ public class SessionTripDAOImpl implements SessionTripDAO{
 		}
 		return sessionTrip;
 	}
+	
+	@Override
+	public List<SessionTripVO> getVehicleTrips(int vehicleId) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction tx = null;
+		List<SessionTripVO> sessionTrips = null;
+		try{
+			tx = session.beginTransaction();
+			Query query = session.createQuery("from SessionTripVO where vehicle.vehicleId ="+vehicleId);
+			sessionTrips = (List<SessionTripVO>)query.list();
+			System.out.println(sessionTrips);
+			tx.commit();
+		}catch(HibernateException e){
+			if (tx!=null) tx.rollback();
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
+		return sessionTrips;
+	}
 
 	@Override
 	public SessionTripVO updateSessionTrip(SessionTripVO sessionTrip) {
@@ -71,26 +91,7 @@ public class SessionTripDAOImpl implements SessionTripDAO{
 		return sessionTrips;
 	}
 
-	@Override
-	public List<SessionTripVO> getVehicleTrips(int vehicleId) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction tx = null;
-		//BugVO bugVOs = null;
-		List<SessionTripVO> sessionTrips = null;
-		try{
-			tx = session.beginTransaction();
-			Query query = session.createQuery("from SessionTripVO where vehicle.vehicleId ="+vehicleId);
-			sessionTrips = (List<SessionTripVO>)query.list();
-			System.out.println(sessionTrips);
-			tx.commit();
-		}catch(HibernateException e){
-			if (tx!=null) tx.rollback();
-			e.printStackTrace();
-		}finally{
-			session.close();
-		}
-		return sessionTrips;
-	}
+	
 	
 	public static void main(String args[]){
 		SessionTripDAO dao = new SessionTripDAOImpl();

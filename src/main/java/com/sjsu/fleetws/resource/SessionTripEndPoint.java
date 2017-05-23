@@ -60,6 +60,7 @@ public class SessionTripEndPoint {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addSessionTrip(RestSessionTripVO restVO){
 		tripDAO = new SessionTripDAOImpl();
+		System.out.println(restVO.getStartTime());
 		SessionTripVO tripVO = CommonUtils.tripRestVoToVo(restVO);
 		tripVO = tripDAO.addSessionTrip(tripVO);
 		restVO.setSessionTripId(tripVO.getSessionTripId());

@@ -64,5 +64,32 @@ public class VehicleEndPoint {
 		GenericEntity<RestVehicleVO> entity = new GenericEntity<RestVehicleVO>(vehicle) {};
 		return Response.status(Status.OK).entity(entity).build();
 	}
+	
+	@POST
+	@Path("/bulk")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addDrivers(List<RestVehicleVO> restVehicles){
+		vehicleDAO = new VehicleDAOImpl();
+		List<VehicleVO> vehicles = new ArrayList<>();
+		for (RestVehicleVO vehicle : restVehicles) {
+			VehicleVO restVO = CommonUtils.vehicleRestVoToVo(vehicle);
+			if(restVO.getDriver()!=null){
+				restVO.getDriver().setVehicle(null);
+			}
+			vehicles.add(restVO);
+		}
+		vehicles = (List<VehicleVO>)vehicleDAO.addVehicles(vehicles);
+		restVehicles = new ArrayList<RestVehicleVO>(); 
+		for (VehicleVO vehicle : vehicles) {
+			RestVehicleVO restVO = CommonUtils.vehicleVoToRestVo(vehicle);
+			if(restVO.getDriver()!=null){
+				restVO.getDriver().setVehicle(null);
+			}
+			restVehicles.add(restVO);
+		}
+		GenericEntity<List<RestVehicleVO>> entity = new GenericEntity<List<RestVehicleVO>>(restVehicles) {};
+		return Response.status(Status.OK).entity(entity).build();
+	}
 
 }

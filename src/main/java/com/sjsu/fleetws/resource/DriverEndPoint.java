@@ -64,6 +64,46 @@ public class DriverEndPoint {
 		GenericEntity<RestDriverVO> entity = new GenericEntity<RestDriverVO>(driver) {};
 		return Response.status(Status.OK).entity(entity).build();
 	}
+	
+	@POST
+	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response login(RestDriverVO driver){
+		driverDAO = new DriverDAOImpl();
+		DriverVO driverVO = CommonUtils.driverRestVoToVo(driver);
+		driverVO = driverDAO.login(driver.getEmail(), driver.getPassword());
+		driver = CommonUtils.driverVoToRestVo(driverVO);
+		GenericEntity<RestDriverVO> entity = new GenericEntity<RestDriverVO>(driver) {};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	@POST
+	@Path("/bulk")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addDrivers(List<RestDriverVO> restDrivers){
+		driverDAO = new DriverDAOImpl();
+		List<DriverVO> drivers = new ArrayList<>();
+		for (RestDriverVO driver : restDrivers) {
+			DriverVO restVO = CommonUtils.driverRestVoToVo(driver);
+			if(restVO.getVehicle()!=null){
+				restVO.getVehicle().setDriver(null);
+			}
+			drivers.add(restVO);
+		}
+		drivers = (List<DriverVO>)driverDAO.addDrivers(drivers);
+		restDrivers = new ArrayList<RestDriverVO>(); 
+		for (DriverVO driver : drivers) {
+			RestDriverVO restVO = CommonUtils.driverVoToRestVo(driver);
+			if(restVO.getVehicle()!=null){
+				restVO.getVehicle().setDriver(null);
+			}
+			restDrivers.add(restVO);
+		}
+		GenericEntity<List<RestDriverVO>> entity = new GenericEntity<List<RestDriverVO>>(restDrivers) {};
+		return Response.status(Status.OK).entity(entity).build();
+	}
 
 
 }

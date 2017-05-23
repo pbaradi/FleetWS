@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>TrackMyVehicle</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link rel="stylesheet" href="css/maruti-style.css" />
+<link rel="stylesheet" href="css/maruti-media.css" class="skin-color" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+ <style>p.indent{ padding-left: 1.8em }</style>
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">TrackMyVehicle</a></h1>
+</div>
+<!--close-Header-part--> 
+
+<!--top-Header-messaages-->
+
+<!--close-top-Header-messaages--> 
+
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    
+    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+  </ul>
+</div>
+
+<!--close-top-Header-menu-->
+
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a><ul>
+    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Report</span></a> </li>
+    <li> <a href="vehicle.html"><i class="icon icon-signal"></i> <span>Vehicle</span></a> </li>
+	<li><a href="trip.html"><i class="icon icon-th"></i> <span>Trip</span></a></li>
+    <li> <a href="driver.html"><i class="icon icon-inbox"></i> <span>Driver</span></a> </li>
+    <li><a href="map.html"><i class="icon icon-th"></i> <span>Map</span></a></li>
+    
+    
+    
+  </ul>
+</div>
+<div id="content">
+  <div id="content-header">
+    
+  </div>
+  <div class="row-fluid" style="padding-top: 25px;">
+<div class="span6">
+<div id="container1" style="min-width:150px; height: 250px; max-width: 600px; margin: 0 auto"></div>
+</div>
+<div class="span6">
+<div id="container2" style="min-width:150px; height: 250px; max-width: 600px; margin: 0 auto"></div>
+</div>
+
+
+  
+    </div>
+
+<script src="js/excanvas.min.js"></script> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.flot.min.js"></script> 
+<script src="js/jquery.flot.resize.min.js"></script> 
+<script src="js/jquery.peity.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/maruti.js"></script> 
+<script src="js/maruti.dashboard.js"></script> 
+<script src="js/maruti.chat.js"></script> 
+
+
+<script src="js/jquery.flot.pie.min.js"></script> 
+<script src="js/maruti.charts.js"></script> 
+
+<script src="js/jquery.peity.min.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+  
+ 
+
+<script type="text/javascript">
+var activeVehicles, nonActiveVehicles, barChartData = [];
+
+$.get("http://lowcost-env.3pwfamww9p.us-west-2.elasticbeanstalk.com/webapi/reports", function(data, status){
+	document.getElementById("driverCount").innerHTML = data.driverCount;
+	document.getElementById("vehicleCount").innerHTML = data.vehicleCount;
+	document.getElementById("geofenceCount").innerHTML = data.geofenceCount;
+	activeVehicles = data.vehicleCount;
+	nonActiveVehicles = 25 - (data.vehicleCount);
+	
+	(data.geofences).forEach(function (value, index){
+		barChartData.push([value.fenceId, value.vehiclesCount]);
+	});
+	
+	Highcharts.chart('container1', {
+	    chart: {
+	        plotBackgroundColor: null,
+	        plotBorderWidth: null,
+	        plotShadow: false,
+	        type: 'pie'
+	    },
+	    title: {
+	        text: 'Active Vehicles'
+	    },
+	    tooltip: {
+	        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	    },
+	    plotOptions: {
+	        pie: {
+	            allowPointSelect: true,
+	            cursor: 'pointer',
+	            dataLabels: {
+	                enabled: true,
+	                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+	                style: {
+	                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+	                }
+	            }
+	        }
+	    },
+	    series: [{
+	        name: 'Brands',
+	        colorByPoint: true,
+	       
+	        data: [{
+	            name: 'Active Vehicles',
+	            y: activeVehicles
+	        }, {
+	            name: 'Not Active Vehicles',
+	            y: nonActiveVehicles,
+	            sliced: true,
+	            selected: true
+	        }]
+	    }]
+	});
+	
+	Highcharts.chart('container2', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: 'Active vehicles in each Geofence'
+	    },
+	    subtitle: {
+	        text: ''
+	    },
+	    xAxis: {
+	        type: 'category',
+	        title: {
+	            text: 'Geofence ID'
+	        },
+	        labels: {
+	            rotation: -45,
+	            style: {
+	                fontSize: '13px',
+	                fontFamily: 'Verdana, sans-serif'
+	            }
+	        }
+	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	            text: 'Number of vehicles'
+	        }
+	    },
+	    legend: {
+	        enabled: false
+	    },
+	    tooltip: {
+	        pointFormat: 'Number of Vehicles: <b>{point.y:.1f} </b>'
+	    },
+	    series: [{
+	        name: 'Vehicles',
+	        data: barChartData,
+	        dataLabels: {
+	            enabled: true,
+	            rotation: -90,
+	            color: '#FFFFFF',
+	            align: 'right',
+	            format: '{point.y:.1f}', // one decimal
+	            y: 10, // 10 pixels down from the top
+	            style: {
+	                fontSize: '13px',
+	                fontFamily: 'Verdana, sans-serif'
+	            }
+	        }
+	    }]
+	});
+	
+});
+   
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  function goPage (newURL) {
+
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+      
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();            
+          } 
+          // else, send page to designated URL            
+          else {  
+            document.location.href = newURL;
+          }
+      }
+  }
+
+// resets the menu selection upon entry to this page:
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+  
+
+
+/* Highcharts.chart('container2', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Alerts'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+       
+        data: [{
+            name: 'RPM',
+            y: 24.33
+        }, {
+            name: 'Speeding',
+            y: 70.03,
+            sliced: true,
+            selected: true
+        }]
+    }]
+}); */
+</script>
+
+<p class="indent"></p>
+<section id="counter" class="counter">
+            <div class="main_counter_area">
+                <div class="overlay p-y-3">
+                    <div class="container">
+                        <div class="row">
+                        
+                            <div class="main_counter_content text-center white-text wow fadeInUp" style="
+    padding-top: 30px;
+">
+                               <div class="col-sm-4" style="width: 30%; background-color: rgb(22, 199, 158); height: 150px; display: inline-block;">
+                                    <div class="single_counter p-y-2 m-t-1">
+                                        <i class="fa fa-smile-o m-b-1"></i>
+                                        <h2 class="statistic-counter" id="driverCount"></h2>
+                                        <p>Number of Drivers</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" style="width: 30%; background-color: rgba(22, 199, 158, 0.69); height: 150px; display: inline-block;">
+                                    <div class="single_counter p-y-2 m-t-1">
+                                        <i class="fa fa-object-ungroup m-b-1"></i>
+                                        <h2 class="statistic-counter" id="geofenceCount"></h2>
+                                        <p>Number of geofences</p>
+                                    </div>
+                                </div> 
+                                 <div class="col-sm-4" style=";
+    width: 30%; height: 150px;background-color: rgba(22, 199, 158, 0.39);
+    display: inline-block;
+">
+                                    <div class="single_counter p-y-2 m-t-1">
+                                        <i class="fa fa-car m-b-1"></i>
+                                        <h2 class="statistic-counter" id="vehicleCount"></h2>
+                                        <p>Number of vehicles</p>
+                                    </div>
+                                </div> 
+                                <!-- <div class="col-md-3" style="
+    width: 23%;
+    display: inline-block;
+">
+                                    <div class="single_counter p-y-2 m-t-1">
+                                        <i class="fa fa-beer m-b-1"></i>
+                                        <h2 class="statistic-counter">480</h2>
+                                        <p>Pizzas Ordered</p>
+                                    </div>
+                                </div> -->
+                            </div>
+                            
+                            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</body>
+</html>

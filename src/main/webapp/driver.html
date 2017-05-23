@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>TrackMyVehicle</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link rel="stylesheet" href="css/maruti-style.css" />
+<link rel="stylesheet" href="css/maruti-media.css" class="skin-color" />
+</head>
+<body onLoad="load()">
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">TrackMyVehicle</a></h1>
+</div>
+<!--close-Header-part--> 
+
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    
+    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+  </ul>
+</div>
+
+<!--close-top-Header-menu-->
+
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a><ul>
+    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Report</span></a> </li>
+    <li> <a href="vehicle.html"><i class="icon icon-signal"></i> <span>Vehicle</span></a> </li>
+	<li><a href="trip.html"><i class="icon icon-th"></i> <span>Trip</span></a></li>
+    <li> <a href="driver.html"><i class="icon icon-inbox"></i> <span>Driver</span></a> </li>
+    <li><a href="map.html"><i class="icon icon-th"></i> <span>Map</span></a></li>
+    
+    
+    
+  </ul>
+</div>
+<div id="content">
+  <div id="content-header">
+    
+  </div>
+  <div class="container-fluid">
+   	<div class="quick-actions_homepage">
+    <ul class="quick-actions">
+    	  <li> <a href="#detailDrivertable"> <i class="icon-web"></i>Details</a> </li>
+          <li> <a href="#profilingDrivertable" onclick="driverProfile()"> <i class="icon-dashboard"></i>Profiling</a> </li>
+        </ul>
+   </div>
+   
+    <div>
+          <div><a href="#addDriver" data-toggle="modal" class="btn btn-success" style="
+    float: right;
+    margin-bottom: 15px;
+    margin-right: 20px;">   Add Driver</a>
+     
+                        <!-- Modal -->
+<div class="modal fade" id="addDriver" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" 
+                   data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only"></span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Add Driver
+                </h4>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                
+                <form role="form">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Driver Name</label>
+                      <input type="email" class="form-control"
+                      id="driverName" placeholder=""/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Driver ID</label>
+                      <input type="email" class="form-control"
+                          id="driverid" placeholder=""/>
+                  </div>
+                  
+                    <div class="form-group">
+                    <label for="exampleInputEmail1">Contact</label>
+                      <input type="email" class="form-control"
+                      id="contact" placeholder=""/>
+                  </div>
+                  
+                   <div class="form-group">
+                    <label for="exampleInputEmail1">Vehicle ID</label>
+                      <input type="email" class="form-control"
+                      id="vehicleid" placeholder=""/>
+                  </div>
+                   
+                  
+                  
+                </form>
+                
+                
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                            Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+               
+               
+    <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12"style="
+    margin-top: -20px;
+">
+
+        <div id="detailDrivertable" class="widget-box">
+          <div class="widget-title">
+             <span class="icon"><i class="icon-th"></i></span> 
+            <h5>Details</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table" id="driverDetails">
+              <thead>
+                <tr>
+				  <th>Driver Name</th>
+                  <th>Driver ID</th>
+				  <th>Contact</th>
+                  <th>Vehicle ID</th>
+				  <!-- <th>Edit/Update</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr class="gradeX">
+				<td>Mike alphonso</td>
+                  <td>mik1</td>
+				  <td>8236798123
+                    </td>
+				  <td>Audii</td>
+				  <td>  <a href="#" class="btn btn-info" role="button">Link Button</a>
+</td>
+                  
+        
+				  
+                </tr>
+                <tr class="gradeC">
+				<td>Smith vargee
+                    </td>
+				<td>Smith1</td>
+				<td>8991234017
+                    </td>
+                  <td>BMW</td>
+                  
+                 
+           
+                </tr>
+                <tr class="gradeA">
+				<td>John bond</td>
+				<td>John</td>
+                  
+                  <td>9812345613</td>
+				  <td>Mazda</td>
+                  
+                  
+			
+                </tr>
+               
+                <tr class="gradeA">
+				<td>Saint Xavier</td>
+				<td>Xavier</td>
+                  <td>5641781409</td>
+				  <td>Ford</td>
+                
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+		
+		 <div id="profilingDrivertable" class="widget-box">
+          <div class="widget-title">
+             <span class="icon"><i class="icon-th"></i></span> 
+            <h5>Details</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+				<th>Driver Name</th>
+                  <th>Driver ID</th>
+				  <th>Contact</th>
+                  <th>Vehicle ID</th>
+				  
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr class="gradeX">
+				<td>Mike alphonso</td>
+                  <td>mik1</td>
+				  <td>8236798123
+                    </td>
+				  <td>Audii</td>
+				  
+                  
+        
+				  
+                </tr>
+                <tr class="gradeC">
+				<td>Smith vargee
+                    </td>
+				<td>Smith1</td>
+				<td>8991234017
+                    </td>
+                  <td>BMW</td>
+                  
+                 
+           
+                </tr>
+                <tr class="gradeA">
+				<td>John bond</td>
+				<td>John</td>
+                  
+                  <td>9812345613</td>
+				  <td>Mazda</td>
+                  
+                  
+			
+                </tr>
+               
+                <tr class="gradeA">
+				<td>Saint Xavier</td>
+				<td>Xavier</td>
+                  <td>5641781409</td>
+				  <td>Ford</td>
+                
+                </tr>
+           -->      
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+		
+</div>
+</div>
+
+<script src="js/excanvas.min.js"></script> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.flot.min.js"></script> 
+<script src="js/jquery.flot.resize.min.js"></script> 
+<script src="js/jquery.peity.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/maruti.js"></script> 
+<script src="js/maruti.dashboard.js"></script> 
+<script src="js/maruti.chat.js"></script> 
+<script src="js/jquery.uniform.js"></script> 
+<script src="js/select2.min.js"></script> 
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/maruti.tables.js"></script>
+ 
+
+<script type="text/javascript">
+var trHTML = '';
+// Get the vehicleDetails information
+$.get("http://lowcost-env.3pwfamww9p.us-west-2.elasticbeanstalk.com/webapi/drivers", function(data, status){	
+	  $.each(data, function (i, item) {
+          var license = item.vehicle ? item.vehicle.licenceNumber : 0;
+		  trHTML += '<tr><td>' + item.name + '</td><td>' + item.driverId + '</td><td>'  + item.mobile + '</td><td>' + license + '</td></tr>';
+    });
+    
+    $('#driverDetails').append(trHTML);
+    
+});
+
+	function load(){
+		document.getElementById('detailDrivertable').style.display="block";
+	}
+	
+	function driverProfile() {
+		
+	}
+
+
+
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  function goPage (newURL) {
+
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+      
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();            
+          } 
+          // else, send page to designated URL            
+          else {  
+            document.location.href = newURL;
+          }
+      }
+  }
+
+// resets the menu selection upon entry to this page:
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+
+$('#openBtn').click(function(){
+	$('#myModal').modal({show:true})
+});
+
+$('.widget-box') .hide()
+$('a[href^="#"]').on('click', function(event) {
+$('.widget-box') .hide()
+    var target = $(this).attr('href');
+
+    $('.widget-box'+target).toggle();
+
+});
+$(function() {
+  $('ul li').click( function() {
+    $(this).addClass('active').siblings().removeClass('active');
+  });
+});
+
+</script>
+</body>
+</html>

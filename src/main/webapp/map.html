@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>TrackMyVehicle</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link rel="stylesheet" href="css/maruti-style.css" />
+<link rel="stylesheet" href="css/maruti-media.css" class="skin-color" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+ <style>p.indent{ padding-left: 1.8em }</style>
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">TrackMyVehicle</a></h1>
+</div>
+<!--close-Header-part--> 
+
+<!--top-Header-messaages-->
+
+<!--close-top-Header-messaages--> 
+
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    
+    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+  </ul>
+</div>
+
+<!--close-top-Header-menu-->
+
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a><ul>
+    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Report</span></a> </li>
+    <li> <a href="vehicle.html"><i class="icon icon-signal"></i> <span>Vehicle</span></a> </li>
+    <li><a href="trip.html"><i class="icon icon-th"></i> <span>Trip</span></a></li>
+    <li> <a href="driver.html"><i class="icon icon-inbox"></i> <span>Driver</span></a> </li>
+    <li><a href="map.html"><i class="icon icon-th"></i> <span>Map</span></a></li>
+    
+    
+    
+  </ul>
+</div>
+<div id="content">
+  <div id="content-header">
+    
+  </div>
+  <div class="container-fluid">
+   	<div class="quick-actions_homepage">
+    <ul class="quick-actions">
+          
+          
+          <li> <a href="#"> <i class="icon-web"></i>Create GeoFence </a> </li>
+          
+          <li> <a href="#"> <i class="icon-calendar"></i> GeoFence Details</a> </li>
+        </ul>
+   </div>
+    </div>
+	<div class="container-fluid">
+    <div class="row-fluid">
+	  <div id="map" style="height:450px; width:100%">
+</div>
+</div>
+</div>
+        
+
+
+<script src="js/excanvas.min.js"></script> 
+ 
+<script src= "https://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.flot.min.js"></script> 
+<script src="js/jquery.flot.resize.min.js"></script> 
+<script src="js/jquery.peity.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/maruti.js"></script> 
+<script src="js/maruti.dashboard.js"></script> 
+<script src="js/maruti.chat.js"></script> 
+ <!--  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_r9lnfq2wfj1Ac6q0G8FoJ8ugmT-PLyI&callback=myMap"></script>  -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_o9X14Le8-3GDPYx88SBEO9aolzwSO0M&libraries=drawing&callback=initMap"
+         async defer></script>
+<script type="text/javascript">
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  	  var map;
+	  var drawingManager;
+	  var bounds  = [{
+  		    north: 44.599,
+		    south: 44.490,
+		    east: -78.443,
+		    west: -78.649
+		  },{
+			north: 44.599,
+		    south: 44.490,
+		    east: -78.443,
+		    west: -78.649
+		  }];
+	  // var rectangle;
+	  var geofence;
+	  
+  	function goPage (newURL) {
+
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+      
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();            
+          } 
+          // else, send page to designated URL            
+          else {  
+            document.location.href = newURL;
+          }
+      }
+  	}
+  
+  function CenterControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+		controlUI.style.marginTop="5px";
+		controlUI.style.marginRight="10px";
+        controlUI.title = 'Save';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Save';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+        	saveGeoFence();
+        });
+
+      }
+  
+  /* $.get("http://localhost:8080/FleetWS/webapi/geofences", function(data, status){
+	  	bounds = _(data).map(function(item){
+	  		north : item.north,
+	  		south : item.south,
+	  		east : item.east,
+	  		west : item.west
+	  		
+	  	});
+}); */
+  
+	function initMap() {
+	
+	map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 44.5452, lng: -78.5389},
+        zoom: 9
+	});
+	
+	$.get("http://lowcost-env.3pwfamww9p.us-west-2.elasticbeanstalk.com/webapi/geofences", function(data, status){	
+		
+	 	// Fetch and display the geofences
+       data.forEach(function (value, index){
+    	   
+    	  var bound = {
+    			  north : value.north,
+    			  south : value.south,
+    			  east : value.east,
+    			  west : value.west
+    	  }
+    	  
+    	   rectangle = new google.maps.Rectangle({
+               bounds: bound,
+               editable: true,
+               draggable: true,
+               fillColor: '#ffff00',
+               fillOpacity: 0.25,
+               strokeWeight: 2,
+          });
+    	   
+    	  rectangle.setMap(map);
+       });
+       
+       // Add an event listener on the rectangle boundaries change
+       rectangle.addListener('bounds_changed', showNewRect);
+
+       // Define an info window on the map.
+       infoWindow = new google.maps.InfoWindow();
+		
+		// Create the DIV to hold the control and call the CenterControl()
+        // constructor passing in this DIV.
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+
+       	// Draw a new geofence
+        drawingManager = new google.maps.drawing.DrawingManager({
+    	   drawingControlOptions: {
+    		   position: google.maps.ControlPosition.TOP_CENTER,
+               drawingModes: ['rectangle']
+             },
+           rectangleOptions: {
+        	   bounds: bounds,
+        	   fillColor: '#ffff00',
+               fillOpacity: 0.25,
+               strokeWeight: 2,
+               clickable: true,
+               editable: true,
+               zIndex: 1
+             }
+       });
+        
+       drawingManager.setMap(map);
+       
+    	// Define an info window on the map.
+       infoWindow = new google.maps.InfoWindow();
+       
+    	// Add an event listener on the rectangle.
+       google.maps.event.addListener(drawingManager, 'bounds_changed', showNewRect);
+       
+       google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+    	   if (event.type == 'rectangle') {
+    	     var ne = event.overlay.getBounds().getNorthEast();
+    	     var sw = event.overlay.getBounds().getSouthWest();
+    	     
+    	    geofence = {
+    	    	north : ne.lat(),
+    	    	east: ne.lng(),
+    	    	south: sw.lat(),
+    	    	west: sw.lng()
+    	     };
+    	    
+    	     var contentString = '<b>Rectangle Lat Long.</b><br>' +
+		      'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
+		      'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+
+		  // Set the info window's content and position.
+		  infoWindow.setContent(contentString);
+		  infoWindow.setPosition(ne);
+
+		  infoWindow.open(map);
+    	   }
+    	}); 
+	   });
+     }
+	
+	function saveGeoFence(){
+		$.ajax({
+			  'type': "POST",
+			  'url': "http://lowcost-env.3pwfamww9p.us-west-2.elasticbeanstalk.com/webapi/geofences",
+			  'data': JSON.stringify(geofence),
+			  'contentType': "application/json; charset=utf-8",
+			  'dataType': 'json',
+			  'success' : function(){
+				  geofence = {};
+				  sweetAlert("Here's a message!");
+			  }
+			});
+	}
+	
+	function createCustomAlert() {
+		alert('inside');
+		var txt = "Hi";
+	    d = document;
+
+	    if(d.getElementById("modalContainer")) return;
+
+	    mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+	    mObj.id = "modalContainer";
+	    mObj.style.height = d.documentElement.scrollHeight + "px";
+
+	    alertObj = mObj.appendChild(d.createElement("div"));
+	    alertObj.id = "alertBox";
+	    if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+	    alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+	    alertObj.style.visiblity="visible";
+
+	    h1 = alertObj.appendChild(d.createElement("h1"));
+	    h1.appendChild(d.createTextNode(ALERT_TITLE));
+
+	    msg = alertObj.appendChild(d.createElement("p"));
+	    //msg.appendChild(d.createTextNode(txt));
+	    msg.innerHTML = txt;
+
+	    btn = alertObj.appendChild(d.createElement("a"));
+	    btn.id = "closeBtn";
+	    btn.appendChild(d.createTextNode(ALERT_BUTTON_TEXT));
+	    btn.href = "#";
+	    btn.focus();
+	    btn.onclick = function() { removeCustomAlert();return false; }
+
+	    alertObj.style.display = "block";
+
+	}
+
+	
+	function showNewRect(event) {
+		  var ne = rectangle.getBounds().getNorthEast();
+		  var sw = rectangle.getBounds().getSouthWest();
+
+		  var contentString = '<b>Rectangle moved.</b><br>' +
+		      'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
+		      'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+
+		  // Set the info window's content and position.
+		  infoWindow.setContent(contentString);
+		  infoWindow.setPosition(ne);
+
+		  infoWindow.open(map);
+	}
+	
+	function showValues(event) {
+		alert(JSON.stringify(event.latLng.lat()));
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+.table th,.table td
+{
+text-align:"center";
+}
+</style>
+
+<title>TrackMyVehicle</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="css/fullcalendar.css" />
+<link rel="stylesheet" href="css/maruti-style.css" />
+<link rel="stylesheet" href="css/maruti-media.css" class="skin-color" />
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="dashboard.html">TrackMyVehicle</a></h1>
+</div>
+<!--close-Header-part--> 
+
+<!--top-Header-messaages-->
+
+<!--close-top-Header-messaages--> 
+
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    
+    <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+  </ul>
+</div>
+
+<!--close-top-Header-menu-->
+
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a><ul>
+    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Report</span></a> </li>
+    <li> <a href="vehicle.html"><i class="icon icon-signal"></i> <span>Vehicle</span></a> </li>
+	<li><a href="trip.html"><i class="icon icon-th"></i> <span>Trip</span></a></li>
+    <li> <a href="driver.html"><i class="icon icon-inbox"></i> <span>Driver</span></a> </li>
+    <li><a href="map.html"><i class="icon icon-th"></i> <span>Map</span></a></li>
+    
+    
+    
+  </ul>
+</div>
+<div id="content">
+<div id="content-header">
+    
+  </div>
+  
+  <div class="row-fluid">
+      <div class="span4">
+        <div class="widget-box">
+          
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table" >
+              <thead>
+                <tr style="text-align:center">
+                  <th>Vehicle Name</th>
+                  <th>Trip</th>
+                </tr>
+              </thead>
+              <tbody>
+			  <tr class="gradeX">
+                  <td>Audii</td>
+                  <td><span align="center"><a href="#car1" id= "trip1" class="btn btn-success">Trip</a><span> 
+                    </td>
+					</tr>
+					<tr class="gradeX">
+                  <td>BMW</td>
+                  <td><span align="center"><a href="#" id="trip2" class="btn btn-success">Trip</a><span> 
+                    </td>
+					</tr>
+					<tr class="gradeX">
+                  <td>GMC</td>
+                  <td><span align="center"><a href="#" id="trip3" class="btn btn-success">Trip</a><span> 
+                    </td>
+					</tr>
+					<tr class="gradeX">
+                  <td>Honda</td>
+                  <td><span align="center"><a href="#" id="trip4" class="btn btn-success">Trip</a><span> 
+                    </td>
+					</tr>
+					<tr class="gradeX">
+                  <td>Audii</td>
+                  <td><span align="center"><a href="#" id="trip5" class="btn btn-success">Trip</a><span> 
+                    </td>
+					</tr>
+					<tr class="gradeX">
+                  <td>GMC</td>
+                  <td><span align="center"><a href="#" id="trip6" class="btn btn-success">Trip</a><span> 
+                    </td>
+					</tr>
+					<tr class="gradeX">
+                  <td>BMW</td>
+                  <td><span align="center"><a href="#" id="trip7" class="btn btn-success" id="trip">Trip</a><span> 
+                    </td>
+					</tr>
+			  </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="span8"style="margin-left:auto;padding-left:10px">
+        <div class="widget-box">
+         
+          <div class="widget-content nopadding updates">
+		  
+		  <div style="Display:none">
+<select id="start">
+  <option id="os1" value="190 Ryland street, San Jose CA 95110 "></option>
+  <option id="os2" value="SJSU, San Jose, CA"></option>
+  <option id="os3" value="1330 The Alameda, San Jose, CA">Joplin, MO</option>
+  <option id="os4" value="Great Mall, Milpitas, CA">Oklahoma City</option>
+  <option id="os5" value="450 Serra Mall, Stanford, CA 94305">Amarillo</option>
+  <option id="os6" value="1696 Laurel St, San Carlos, CA 94070">Gallup, NM</option>
+  <option id="os7" value="2086 Newpark Mall, Newark, CA 94560">Flagstaff, AZ</option>
+  
+</select>
+<select id="end">
+  <option id="oe1" value="2086 Newpark Mall, Newark, CA 94560">Chicago</option>
+  <option id="oe2" value="1696 Laurel St, San Carlos, CA 94070"> SJSU San Jose</option>
+  <option id="oe3" value="450 Serra Mall, Stanford, CA 94305">Joplin, MO</option>
+  <option id="oe4" value="1330 The Alameda, San Jose, CA">Oklahoma City</option>
+  <option id="oe5" value="Great Mall, Milpitas, CA">Amarillo</option>
+  <option id="oe6" value="SJSU, San Jose, CA">Gallup, NM</option>
+  <option id="oe7" value="190 Ryland street, San Jose CA 95110 ">Flagstaff, AZ</option>
+ 
+</select>
+</div>
+		   <div id="map" style="height:420px; width:100%"></div>
+<!-- Replace the value of the key parameter with your own API key. -->
+<!-- <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_o9X14Le8-3GDPYx88SBEO9aolzwSO0M&callback=initMap">
+</script> -->
+<!-- Replace the value of the key parameter with your own API key. -->
+</div>
+             </div>
+        </div>
+      </div>
+    </div>
+	</div>
+
+
+  
+
+     
+
+	 
+</div>
+
+
+<script src="js/excanvas.min.js"></script> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.flot.min.js"></script> 
+<script src="js/jquery.flot.resize.min.js"></script> 
+<script src="js/jquery.peity.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/maruti.js"></script> 
+<script src="js/maruti.dashboard.js"></script> 
+<script src="js/maruti.chat.js"></script> 
+<script src="js/jquery.uniform.js"></script> 
+<script src="js/select2.min.js"></script> 
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/maruti.tables.js"></script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_o9X14Le8-3GDPYx88SBEO9aolzwSO0M&callback=initMap">
+</script> 
+
+<script type="text/javascript">
+
+function tripcoordinate(start, end) {
+alert("Name = "+start+" URL = "+end);
+}
+
+function initMap() {
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: {lat: 37.77, lng: -122.41}
+  });
+  directionsDisplay.setMap(map);
+
+  var onChangeHandler1 = function() {
+    calculateAndDisplayRoute1(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip1').addEventListener("click", onChangeHandler1);
+  
+  
+  var onChangeHandler2 = function() {
+    calculateAndDisplayRoute2(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip2').addEventListener("click", onChangeHandler2);
+  
+  var onChangeHandler3 = function() {
+    calculateAndDisplayRoute3(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip3').addEventListener("click", onChangeHandler3);
+  
+  var onChangeHandler4 = function() {
+    calculateAndDisplayRoute4(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip4').addEventListener("click", onChangeHandler4);
+  
+  var onChangeHandler5 = function() {
+    calculateAndDisplayRoute5(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip5').addEventListener("click", onChangeHandler5);
+  
+  var onChangeHandler6 = function() {
+    calculateAndDisplayRoute6(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip6').addEventListener("click", onChangeHandler6);
+  
+  var onChangeHandler7 = function() {
+    calculateAndDisplayRoute7(directionsService, directionsDisplay);
+  };
+  
+  document.getElementById('trip7').addEventListener("click", onChangeHandler7);
+  
+
+  }
+
+function calculateAndDisplayRoute1(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os1').value,
+    destination: document.getElementById('oe1').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+
+function calculateAndDisplayRoute2(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os2').value,
+    destination: document.getElementById('oe2').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+
+function calculateAndDisplayRoute3(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os3').value,
+    destination: document.getElementById('oe3').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+
+
+
+function calculateAndDisplayRoute4(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os4').value,
+    destination: document.getElementById('oe4').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+
+function calculateAndDisplayRoute5(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os5').value,
+    destination: document.getElementById('oe5').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+
+function calculateAndDisplayRoute6(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os6').value,
+    destination: document.getElementById('oe6').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+
+function calculateAndDisplayRoute7(directionsService, directionsDisplay) {
+  directionsService.route({
+    origin: document.getElementById('os7').value,
+    destination: document.getElementById('oe7').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+}
+
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  function goPage (newURL) {
+
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+      
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();            
+          } 
+          // else, send page to designated URL            
+          else {  
+            document.location.href = newURL;
+          }
+      }
+  }
+
+  
+  
+// resets the menu selection upon entry to this page:
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+</script>
+</body>
+</html>
